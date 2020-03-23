@@ -30,6 +30,7 @@ public class Game implements Runnable {
     private int counterVidas;
     private int score = 0;
     private LinkedList<GoodGuy> listaBuenos; // to use a list of enemies
+    private boolean pause = false; // to pause or unpause game
     
     
     
@@ -147,6 +148,13 @@ public class Game implements Runnable {
     
     private void tick() {
         keyManager.tick();
+        // verifies if the game is paused or not
+        if (keyManager.pause) {
+            pause = !pause;
+        }
+    
+        if (!pause) {
+        
         // avancing player with colision
         player.tick();
         for (Enemy enemy : lista) {
@@ -187,6 +195,8 @@ public class Game implements Runnable {
 
        
             }
+        }
+        
         }
     }
     
