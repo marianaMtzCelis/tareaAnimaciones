@@ -11,6 +11,11 @@ import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_P;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -33,7 +38,8 @@ public class Game implements Runnable {
     private int score = 0;
     private LinkedList<GoodGuy> listaBuenos; // to use a list of enemies
     private boolean isPaused; // to pause or unpause game
-
+    private ReadandWrite progressFile; // class to save and load progress
+    
     /**
      * to create title, width and height and set the game is still not running
      *
@@ -50,6 +56,7 @@ public class Game implements Runnable {
         vidas = (int) (Math.random() * 3) + 3;
         counterVidas = 0;
         isPaused = false;
+        progressFile()
     }
 
     /**
