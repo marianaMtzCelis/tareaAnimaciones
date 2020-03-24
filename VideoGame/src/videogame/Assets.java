@@ -15,12 +15,10 @@ public class Assets {
 
     public static BufferedImage background; // to store background image
     public static BufferedImage player;     // to store the player image
-    public static SoundClip backSound;      // to store the backsound sound
-    public static SoundClip gunShot;        // to store the gunShot sound
     public static BufferedImage enemy;      // to store the enemy image
     public static BufferedImage goodGuy;    // to store the googGuy image
-    public static SoundClip buenos;         // to store the buenos sound
-    public static SoundClip malos;          // to store the malos sound
+    public static SoundClip help;         // to store the buenos sound
+    public static SoundClip hit;          // to store the malos sound
     public static BufferedImage end;        // to store the end (gameOver) image
     
     public static BufferedImage spritesPlayer; // to store the players sprites
@@ -39,11 +37,9 @@ public class Assets {
         background = ImageLoader.loadImage("/images/Background.jpg");
         player = ImageLoader.loadImage("/images/mario.png");
         enemy = ImageLoader.loadImage("/images/enemy.png");
-        backSound = new SoundClip("/sounds/back.wav");
-        gunShot = new SoundClip("/sounds/Gunshot.wav");
         goodGuy = ImageLoader.loadImage("/images/flower.png");
-        buenos = new SoundClip("/sounds/malos.wav");
-        malos = new SoundClip("/sounds/buenos.wav");
+        help = new SoundClip("/sounds/help.wav");
+        hit = new SoundClip("/sounds/hit.wav");
         end = ImageLoader.loadImage("/images/gameOver.jpg");
         
         // Getting the sprites from the picture
