@@ -192,7 +192,6 @@ public class Game implements Runnable {
                 score += 5;
                 // plays buenos sound
                 Assets.buenos.play();
-
        
             }
         }
