@@ -78,7 +78,8 @@ public class GoodGuy extends Item {
         
         // reset x position and y position if colision
         if (getX() + 60 >= game.getWidth()) {
-           setX((int) (Math.random() * getWidth()*-1));
+           setX((int) (Math.random() * game.getWidth()*-1));
+           setY((int) (Math.random() * game.getHeight()) - 100);
         }
         
         
