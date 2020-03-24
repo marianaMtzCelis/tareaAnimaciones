@@ -7,6 +7,8 @@ package videogame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_P;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
 
@@ -154,6 +156,7 @@ public class Game implements Runnable {
         keyManager.tick();
         // verifies if the game is paused or not
         if (getKeyManager().pause) {
+            getKeyManager().releaseP();
             isPaused = !isPaused;
         }
         if (!isPaused) {
