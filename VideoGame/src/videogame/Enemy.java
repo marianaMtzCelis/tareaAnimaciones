@@ -80,7 +80,8 @@ public class Enemy extends Item {
         
         // reset x position and y position if colision
         if (getX() <= -30) {
-           setX(game.getWidth() - 30);
+           setX((int) ((Math.random() * game.getWidth())) + game.getWidth());
+           setY((int) (Math.random() * game.getHeight()) - 100);
         }
         
         if (getY() + 80 >= game.getHeight()) {
