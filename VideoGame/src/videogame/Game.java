@@ -129,7 +129,7 @@ public class Game implements Runnable {
             
             // if delta is positive we tick the game
             if (delta >= 1) {
-                tick();
+                if (vidas > 0) tick();
                 render();
                 delta --;
             }
@@ -174,10 +174,8 @@ public class Game implements Runnable {
                 if (counterVidas >= 5) {
                     vidas--;
                     counterVidas = 0;
-                   
                 }
             }
-            
         }
         
         for (GoodGuy flower : listaBuenos) {
