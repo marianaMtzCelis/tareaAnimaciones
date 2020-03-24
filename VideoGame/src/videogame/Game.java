@@ -8,9 +8,9 @@ package videogame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import static java.awt.event.KeyEvent.VK_P;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.FileReader;
@@ -196,6 +196,8 @@ public class Game implements Runnable {
         }
         if (getKeyManager().save){
             getKeyManager().releaseKey(KeyEvent.VK_G);
+            Save("Progress.txt");
+            System.out.println("dsa");
         }
         if (!isPaused) {
             // avancing player with colision
