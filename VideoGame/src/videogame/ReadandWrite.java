@@ -11,15 +11,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 /**
  *
  * @author antoniomejorado
  */
 public class ReadandWrite {
-
     public static void Save(String strFileName) {
-
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(strFileName));
             int vidas = 5;
@@ -53,10 +50,8 @@ public class ReadandWrite {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-
-        Save("Archivo.txt");
-        Load("Archivo.txt");
+        Save("Progress.txt");
+        Load("Progress.txt");
     }
 
 }
