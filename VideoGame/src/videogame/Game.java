@@ -228,6 +228,7 @@ public class Game implements Runnable {
             
             // displays vidas and score
             g.setColor(Color.black);
+            g.drawString("Enemigos chocados en esta vida: " + counterVidas, 100, 80);
             g.drawString("Vidas:" + vidas, 100, 100);
             g.drawString("Score: " + score, 100, 120);
             
