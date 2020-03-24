@@ -43,10 +43,14 @@ public class KeyManager implements KeyListener {
         keys[e.getKeyCode()] = false;
     }
     
+    public void releaseKey(int iCode){
+        keys[iCode] = false;
+    }
+    
     public void releaseP() {
         keys[KeyEvent.VK_P] = false;
     }
-    
+ 
     
     /**
      * to enable or disable moves on every tick

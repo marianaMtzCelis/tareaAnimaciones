@@ -156,8 +156,11 @@ public class Game implements Runnable {
         keyManager.tick();
         // verifies if the game is paused or not
         if (getKeyManager().pause) {
-            getKeyManager().releaseP();
+            getKeyManager().releaseKey(KeyEvent.VK_P);
             isPaused = !isPaused;
+        }
+        if (getKeyManager().save){
+            getKeyManager().releaseKey(KeyEvent.VK_G);
         }
         if (!isPaused) {
             // avancing player with colision
