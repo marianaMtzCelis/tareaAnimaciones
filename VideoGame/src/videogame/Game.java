@@ -168,7 +168,7 @@ public class Game implements Runnable {
                 enemy.setX((int)((Math.random() * getWidth()))+getWidth());
                 enemy.setY((int) (Math.random() * getHeight()) - 100);
                 // plays malos sound
-                Assets.malos.play();
+                Assets.hit.play();
         
                 
                 if (counterVidas >= 5) {
@@ -191,7 +191,7 @@ public class Game implements Runnable {
                 // updates score
                 score += 5;
                 // plays buenos sound
-                Assets.buenos.play();
+                Assets.help.play();
        
             }
         }
@@ -234,9 +234,6 @@ public class Game implements Runnable {
             // displays end image if vidas gets to 0 
             if (vidas <= 0) {
                 g.drawImage(Assets.end, 0, 0, getWidth(), getHeight(), null);
-                Assets.buenos.stop();
-                Assets.malos.stop();
-                
             }
             
             bs.show();
@@ -246,7 +243,7 @@ public class Game implements Runnable {
     }
     
     /**
-     * setting the thead for the game
+     * setting the thread for the game
      */
     public synchronized void start() {
         if (!running) {
