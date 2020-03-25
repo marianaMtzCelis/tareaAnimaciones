@@ -40,6 +40,8 @@ public class Game implements Runnable {
     private int azarBuenos;
     private LinkedList<GoodGuy> listaBuenos; // to use a list of enemies
     private boolean isPaused; // to pause or unpause game
+    private LinkedList<Enemy> newListaMalos;
+    private LinkedList<GoodGuy> newListaBuenos;
     
     /**
      * to create title, width and height and set the game is still not running
@@ -98,7 +100,7 @@ public class Game implements Runnable {
         }
     }
     
-    public static void Load(String strFileName) {
+    public void Load(String strFileName) {
         try {
             FileReader file = new FileReader(strFileName);
             BufferedReader reader = new BufferedReader(file);
@@ -106,9 +108,40 @@ public class Game implements Runnable {
             String datos[];
             line = reader.readLine();
             datos = line.split("/");
-            int vidas = Integer.parseInt(datos[0]);
-            int score = Integer.parseInt(datos[1]);
-            System.out.println("Se leyo  vidas = "+ vidas + " y score = " + score);
+            int nDatos = 0;
+            int loadedVidas = Integer.parseInt(datos[nDatos++]);
+            this.vidas = loadedVidas;
+            int loadedScore = Integer.parseInt(datos[nDatos++]);
+            this.score = loadedScore;
+            int loadedIsPaused = Integer.parseInt(datos[nDatos++]);
+            this.isPaused = (loadedIsPaused == 1) ? true : false;
+            int loadedNMalos = Integer.parseInt(datos[nDatos++]);
+            int loadedNBuenos = Integer.parseInt(datos[nDatos++]);
+            
+            for (int i=1; i<=loadedNMalos; i++) {
+                int loadedX = Integer.parseInt(datos[nDatos++]);
+                int loadedY = Integer.parseInt(datos[nDatos++]);
+                Enemy enemy = new Enemy(loadedX, loadedY, 1, 100, 100, this);
+                newListaMalos.add(enemy);
+            }
+            this.lista = this.newListaMalos;
+            
+             for (int i=1; i<=loadedNBuenos; i++) {
+                int loadedX = Integer.parseInt(datos[nDatos++]);
+                int loadedY = Integer.parseInt(datos[nDatos++]);
+                GoodGuy gg = new GoodGuy(loadedX, loadedY, 1, 100, 100, this);
+                newListaBuenos.add(gg);
+            }
+            this.listaBuenos = this.newListaBuenos;
+            
+            int loadedXPlayer = Integer.parseInt(datos[nDatos++]);
+            int loadedYPlayer = Integer.parseInt(datos[nDatos++]);
+            int loadedDirection = Integer.parseInt(datos[nDatos++]);
+            this.player.setX(loadedXPlayer);
+            this.player.setY(loadedYPlayer);
+            this.player.setDirection(loadedDirection);
+            
+            System.out.println("Se leyo  vidas = "+ loadedVidas + " y score = " + loadedScore);
             reader.close();
         } catch (IOException e) {
             System.out.println("File Not found CALL 911");
@@ -225,6 +258,11 @@ public class Game implements Runnable {
         if (getKeyManager().save){
             getKeyManager().releaseKey(KeyEvent.VK_G);
             Save("Progress.txt");
+        }
+        if (getKeyManager().load) {
+            isPaused = true;
+            getKeyManager().releaseKey(KeyEvent.VK_C);
+            Load("Progress.txt");
         }
         if (!isPaused) {
             // avancing player with colision

@@ -20,6 +20,7 @@ public class KeyManager implements KeyListener {
     public boolean right;   // flag to move right the player
     public boolean pause;   // the flag to pause the game
     public boolean save;    // the flag to save the game
+    public boolean load;    // the flag to load the previous game from file
 
     private boolean keys[];  // to store all the flags for every key
     
@@ -62,5 +63,6 @@ public class KeyManager implements KeyListener {
         right = keys[KeyEvent.VK_RIGHT];
         pause = keys[KeyEvent.VK_P];
         save = keys[KeyEvent.VK_G];
+        load = keys[KeyEvent.VK_C];
     }
 }
