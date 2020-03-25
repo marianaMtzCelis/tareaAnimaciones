@@ -113,10 +113,13 @@ public class Game implements Runnable {
             this.vidas = loadedVidas;
             int loadedScore = Integer.parseInt(datos[nDatos++]);
             this.score = loadedScore;
+            int counterVidas = Integer.parseInt(datos[nDatos++]);
+            this.counterVidas = counterVidas;
             int loadedIsPaused = Integer.parseInt(datos[nDatos++]);
             this.isPaused = (loadedIsPaused == 1) ? true : false;
             int loadedNMalos = Integer.parseInt(datos[nDatos++]);
-            int loadedNBuenos = Integer.parseInt(datos[nDatos++]);
+            newListaMalos = new LinkedList<Enemy>();
+            newListaBuenos = new LinkedList<GoodGuy>();
             
             for (int i=1; i<=loadedNMalos; i++) {
                 int loadedX = Integer.parseInt(datos[nDatos++]);
@@ -125,6 +128,8 @@ public class Game implements Runnable {
                 newListaMalos.add(enemy);
             }
             this.lista = this.newListaMalos;
+            
+            int loadedNBuenos = Integer.parseInt(datos[nDatos++]);
             
              for (int i=1; i<=loadedNBuenos; i++) {
                 int loadedX = Integer.parseInt(datos[nDatos++]);
