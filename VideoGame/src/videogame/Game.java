@@ -35,7 +35,9 @@ public class Game implements Runnable {
     private LinkedList<Enemy> lista; // to use a list of enemies
     private int vidas;
     private int counterVidas;
-    private int score = 0;
+    private int score;
+    private int azarMalos;
+    private int azarBuenos;
     private LinkedList<GoodGuy> listaBuenos; // to use a list of enemies
     private boolean isPaused; // to pause or unpause game
     
@@ -50,19 +52,25 @@ public class Game implements Runnable {
         this.title = title;
         this.width = width;
         this.height = height;
-        running = false;
-        keyManager = new KeyManager();
-        vidas = (int) (Math.random() * 3) + 3;
-        counterVidas = 0;
-        isPaused = false;
+        this.running = false;
+        this.keyManager = new KeyManager();
+        this.vidas = (int) (Math.random() * 3) + 3;
+        this.score = 0;
+        this.counterVidas = 0;
+        this.isPaused = false;
+        this.azarMalos = 0;
+        this.azarBuenos = 0;
     }
     
-    public static void Save(String strFileName) {
+    private void Save(String strFileName) {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(strFileName));
-            int vidas = 5;
-            int score = 20;
-            writer.println("" + vidas + "/" + score);
+            int vidasToSave = this.vidas, score = this.score, counterVidas = this.counterVidas, isPaused;
+            if (this.isPaused){
+                isPaused = 1;
+            } else isPaused = 0;
+            
+            writer.println("" + vidasToSave + "/" + score + "/" + counterVidas + "/" + isPaused);
             writer.close();
         } catch (IOException ioe) {
             System.out.println("File Not found CALL 911");
@@ -127,12 +135,12 @@ public class Game implements Runnable {
         player = new Player(getWidth() / 2 - 50, getHeight() / 2 - 50, 1, 100, 100, this);
 
         // Calculates betweet 8-10 enemies
-        int azar = (int) (Math.random() * 3) + 8;
+        azarMalos = (int) (Math.random() * 3) + 8;
         // Calculates betweet 10-15 good guys
-        int azarBuenos = (int) (Math.random() * 6) + 10;
+        azarBuenos = (int) (Math.random() * 6) + 10;
 
         // creates each enemy and adds it on the list
-        for (int i = 1; i <= azar; i++) {
+        for (int i = 1; i <= azarMalos; i++) {
             Enemy enemy = new Enemy((int) ((Math.random() * getWidth())) + getWidth(), (int) (Math.random() * getHeight()) - 100, 1, 100, 100, this);
             lista.add(enemy);
         }
@@ -197,7 +205,6 @@ public class Game implements Runnable {
         if (getKeyManager().save){
             getKeyManager().releaseKey(KeyEvent.VK_G);
             Save("Progress.txt");
-            System.out.println("dsa");
         }
         if (!isPaused) {
             // avancing player with colision
