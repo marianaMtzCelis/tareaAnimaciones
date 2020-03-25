@@ -91,7 +91,6 @@ public class Enemy extends Item {
         else if (getY() <= -20) {
             setY(-20);
         }
-
     }
 
     /**

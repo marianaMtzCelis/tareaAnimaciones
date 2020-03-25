@@ -1,16 +1,21 @@
 /*
  * Mariana Martínez Celis
  * A01194953
- * Parcial 1
+ * Tarea Animaciones
  */
 package videogame;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import static java.awt.event.KeyEvent.VK_P;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -30,10 +35,12 @@ public class Game implements Runnable {
     private LinkedList<Enemy> lista; // to use a list of enemies
     private int vidas;
     private int counterVidas;
-    private int score = 0;
+    private int score;
+    private int azarMalos;
+    private int azarBuenos;
     private LinkedList<GoodGuy> listaBuenos; // to use a list of enemies
     private boolean isPaused; // to pause or unpause game
-
+    
     /**
      * to create title, width and height and set the game is still not running
      *
@@ -45,11 +52,67 @@ public class Game implements Runnable {
         this.title = title;
         this.width = width;
         this.height = height;
-        running = false;
-        keyManager = new KeyManager();
-        vidas = (int) (Math.random() * 3) + 3;
-        counterVidas = 0;
-        isPaused = false;
+        this.running = false;
+        this.keyManager = new KeyManager();
+        this.vidas = (int) (Math.random() * 3) + 3;
+        this.score = 0;
+        this.counterVidas = 0;
+        this.isPaused = false;
+        this.azarMalos = 0;
+        this.azarBuenos = 0;
+    }
+    
+    private void Save(String strFileName) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(strFileName));
+            // variables to save (lifes, score, hits, paused)
+            int vidasToSave = this.vidas, score = this.score, counterVidas = this.counterVidas, isPaused;
+            // assign a value to isPaused depending on situation
+            if (this.isPaused){
+                isPaused = 1;
+            } else isPaused = 0;
+            // number of enemies to save its directions
+            int azarMalos = this.azarMalos, azarBuenos = this.azarBuenos;
+            // saving more attributes
+            writer.print("" + vidasToSave + "/" + score + "/" + counterVidas + "/" + isPaused + "/" + azarMalos);
+            // variables to store coordinates
+            int x, y;
+            // save every enemy coordinate
+            for (Enemy enemy : lista) {
+                x = enemy.getX();
+                y = enemy.getY();
+                writer.print("/" + x + "/" + y);
+            }
+            // save every ally coordinate
+            writer.print("/" + azarBuenos);
+            for (GoodGuy gg : listaBuenos){
+                x = gg.getX();
+                y = gg.getY();
+                writer.print("/" + x + "/" + y);
+            }
+            // save player's direction and coordinates
+            writer.print("/" + player.getX() + "/" + player.getY() + "/" + player.getDirection());
+            writer.close();
+        } catch (IOException ioe) {
+            System.out.println("File Not found CALL 911");
+        }
+    }
+    
+    public static void Load(String strFileName) {
+        try {
+            FileReader file = new FileReader(strFileName);
+            BufferedReader reader = new BufferedReader(file);
+            String line;
+            String datos[];
+            line = reader.readLine();
+            datos = line.split("/");
+            int vidas = Integer.parseInt(datos[0]);
+            int score = Integer.parseInt(datos[1]);
+            System.out.println("Se leyo  vidas = "+ vidas + " y score = " + score);
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("File Not found CALL 911");
+        }
     }
 
     /**
@@ -92,12 +155,12 @@ public class Game implements Runnable {
         player = new Player(getWidth() / 2 - 50, getHeight() / 2 - 50, 1, 100, 100, this);
 
         // Calculates betweet 8-10 enemies
-        int azar = (int) (Math.random() * 3) + 8;
+        azarMalos = (int) (Math.random() * 3) + 8;
         // Calculates betweet 10-15 good guys
-        int azarBuenos = (int) (Math.random() * 6) + 10;
+        azarBuenos = (int) (Math.random() * 6) + 10;
 
         // creates each enemy and adds it on the list
-        for (int i = 1; i <= azar; i++) {
+        for (int i = 1; i <= azarMalos; i++) {
             Enemy enemy = new Enemy((int) ((Math.random() * getWidth())) + getWidth(), (int) (Math.random() * getHeight()) - 100, 1, 100, 100, this);
             lista.add(enemy);
         }
@@ -156,8 +219,12 @@ public class Game implements Runnable {
         keyManager.tick();
         // verifies if the game is paused or not
         if (getKeyManager().pause) {
-            getKeyManager().releaseP();
+            getKeyManager().releaseKey(KeyEvent.VK_P);
             isPaused = !isPaused;
+        }
+        if (getKeyManager().save){
+            getKeyManager().releaseKey(KeyEvent.VK_G);
+            Save("Progress.txt");
         }
         if (!isPaused) {
             // avancing player with colision
