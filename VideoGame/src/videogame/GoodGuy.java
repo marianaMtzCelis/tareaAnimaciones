@@ -1,7 +1,7 @@
 /*
-* Mariana Martínez Celis
- * A01194953
- * Parcial 1
+ * Mariana Martínez Celis A01194953
+ * Diego Gomez Cota A00824758
+ * Tarea Animaciones
  */
 package videogame;
 
@@ -9,49 +9,51 @@ import java.awt.Graphics;
 
 /**
  *
- * @author marianamtzcelis
+ * @author marianamtzcelis and diegomezcota
  */
 public class GoodGuy extends Item {
-    
+
     private int direction;
     private Game game;
     private Animation animationGoodGuy;
-    
+
     /**
      * Constructor or GoodGuy
+     *
      * @param x
      * @param y
      * @param direction
      * @param width
      * @param height
-     * @param game 
+     * @param game
      */
     public GoodGuy(int x, int y, int direction, int width, int height, Game game) {
         super(x, y, width, height);
         this.direction = direction;
         this.game = game;
-        this.animationGoodGuy = new Animation(Assets.buenosRight,100);
+        this.animationGoodGuy = new Animation(Assets.buenosRight, 100);
     }
 
     /**
-     * gets the direction 
+     * gets the direction
+     *
      * @return direction
      */
     public int getDirection() {
         return direction;
     }
 
-
     /**
-     * sets the direction 
-     * 
+     * sets the direction
+     *
      */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
     /**
-     * gets the height 
+     * gets the height
+     *
      * @return height
      */
     public int getHeight() {
@@ -59,35 +61,32 @@ public class GoodGuy extends Item {
     }
 
     /**
-     * gets the width 
+     * gets the width
+     *
      * @return width
      */
     public int getWidth() {
         return width;
     }
-   
 
     @Override
     public void tick() {
-        
+
         // moves the good guy randomly between 1-3 pixels at a time
-        setX(getX()+((int)(Math.random() * 3) + 1));
-        
+        setX(getX() + ((int) (Math.random() * 3) + 1));
+
         // updates the animation
         this.animationGoodGuy.tick();
-        
+
         // reset x position and y position if colision
         if (getX() + 60 >= game.getWidth()) {
-           setX((int) (Math.random() * game.getWidth()*-1));
-           setY((int) (Math.random() * game.getHeight()) - 100);
+            setX((int) (Math.random() * game.getWidth() * -1));
+            setY((int) (Math.random() * game.getHeight()) - 100);
         }
-        
-        
+
         if (getY() + 80 >= game.getHeight()) {
             setY(game.getHeight() - 80);
-        }
-        
-        else if (getY() <= -20) {
+        } else if (getY() <= -20) {
             setY(-20);
         }
 
@@ -95,12 +94,13 @@ public class GoodGuy extends Item {
 
     /**
      * renders the goodGuy
-     * @param g 
+     *
+     * @param g
      */
     @Override
     public void render(Graphics g) {
         g.drawImage(animationGoodGuy.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         //g.drawImage(Assets.goodGuy, getX(), getY(), getWidth(), getHeight(), null);
     }
-    
+
 }

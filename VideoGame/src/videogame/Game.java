@@ -1,6 +1,6 @@
 /*
- * Mariana Martínez Celis
- * A01194953
+ * Mariana Martínez Celis A01194953
+ * Diego Gomez Cota A00824758
  * Tarea Animaciones
  */
 package videogame;
@@ -22,6 +22,7 @@ import java.io.IOException;
  * @author antoniomejorado
  */
 public class Game implements Runnable {
+
     private BufferStrategy bs;      // to have several buffers when displaying
     private Graphics g;             // to paint objects
     private Display display;        // to display in the game
@@ -32,17 +33,17 @@ public class Game implements Runnable {
     private boolean running;        // to set the game
     private Player player;          // to use a player
     private KeyManager keyManager;  // to manage the keyboard
-    private LinkedList<Enemy> lista; // to use a list of enemies
-    private int vidas;
-    private int counterVidas;
-    private int score;
-    private int azarMalos;
-    private int azarBuenos;
+    private LinkedList<Enemy> lista;// to use a list of enemies
+    private int vidas;              // keeps track of player's lives
+    private int counterVidas;       // keeps track of how many enemies has the player crashed
+    private int score;              // keeps track of score
+    private int azarMalos;          // random number of enemies
+    private int azarBuenos;         // random number of goodguys
     private LinkedList<GoodGuy> listaBuenos; // to use a list of enemies
-    private boolean isPaused; // to pause or unpause game
-    private LinkedList<Enemy> newListaMalos;
-    private LinkedList<GoodGuy> newListaBuenos;
-    
+    private boolean isPaused;       // to pause or unpause game
+    private LinkedList<Enemy> newListaMalos; // to use a list of enemies loaded from file
+    private LinkedList<GoodGuy> newListaBuenos; // to use a list of goodguys loaded from file
+
     /**
      * to create title, width and height and set the game is still not running
      *
@@ -63,16 +64,18 @@ public class Game implements Runnable {
         this.azarMalos = 0;
         this.azarBuenos = 0;
     }
-    
+
     private void Save(String strFileName) {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(strFileName));
             // variables to save (lifes, score, hits, paused)
             int vidasToSave = this.vidas, score = this.score, counterVidas = this.counterVidas, isPaused;
             // assign a value to isPaused depending on situation
-            if (this.isPaused){
+            if (this.isPaused) {
                 isPaused = 1;
-            } else isPaused = 0;
+            } else {
+                isPaused = 0;
+            }
             // number of enemies to save its directions
             int azarMalos = this.azarMalos, azarBuenos = this.azarBuenos;
             // saving more attributes
@@ -87,7 +90,7 @@ public class Game implements Runnable {
             }
             // save every ally coordinate
             writer.print("/" + azarBuenos);
-            for (GoodGuy gg : listaBuenos){
+            for (GoodGuy gg : listaBuenos) {
                 x = gg.getX();
                 y = gg.getY();
                 writer.print("/" + x + "/" + y);
@@ -99,16 +102,18 @@ public class Game implements Runnable {
             System.out.println("File Not found CALL 911");
         }
     }
-    
+
     public void Load(String strFileName) {
         try {
+            // to read from file
             FileReader file = new FileReader(strFileName);
             BufferedReader reader = new BufferedReader(file);
             String line;
             String datos[];
             line = reader.readLine();
             datos = line.split("/");
-            int nDatos = 0;
+            int nDatos = 0; // to keep track of the information read
+            // Loads each saved variable and sets it to the game's variable
             int loadedVidas = Integer.parseInt(datos[nDatos++]);
             this.vidas = loadedVidas;
             int loadedScore = Integer.parseInt(datos[nDatos++]);
@@ -120,33 +125,37 @@ public class Game implements Runnable {
             int loadedNMalos = Integer.parseInt(datos[nDatos++]);
             newListaMalos = new LinkedList<Enemy>();
             newListaBuenos = new LinkedList<GoodGuy>();
-            
-            for (int i=1; i<=loadedNMalos; i++) {
+
+            // Loads to new list of enemies each enemy's x and y position
+            for (int i = 1; i <= loadedNMalos; i++) {
                 int loadedX = Integer.parseInt(datos[nDatos++]);
                 int loadedY = Integer.parseInt(datos[nDatos++]);
                 Enemy enemy = new Enemy(loadedX, loadedY, 1, 100, 100, this);
                 newListaMalos.add(enemy);
             }
+
+            // Copies new list into game's list
             this.lista = this.newListaMalos;
-            
+
             int loadedNBuenos = Integer.parseInt(datos[nDatos++]);
-            
-             for (int i=1; i<=loadedNBuenos; i++) {
+
+            // Loads to new list of goodguys each goodguy's x and y position
+            for (int i = 1; i <= loadedNBuenos; i++) {
                 int loadedX = Integer.parseInt(datos[nDatos++]);
                 int loadedY = Integer.parseInt(datos[nDatos++]);
                 GoodGuy gg = new GoodGuy(loadedX, loadedY, 1, 100, 100, this);
                 newListaBuenos.add(gg);
             }
             this.listaBuenos = this.newListaBuenos;
-            
+
+            // Loads player's x and y position as well as direction from file
             int loadedXPlayer = Integer.parseInt(datos[nDatos++]);
             int loadedYPlayer = Integer.parseInt(datos[nDatos++]);
             int loadedDirection = Integer.parseInt(datos[nDatos++]);
             this.player.setX(loadedXPlayer);
             this.player.setY(loadedYPlayer);
             this.player.setDirection(loadedDirection);
-            
-            System.out.println("Se leyo  vidas = "+ loadedVidas + " y score = " + loadedScore);
+
             reader.close();
         } catch (IOException e) {
             System.out.println("File Not found CALL 911");
@@ -260,7 +269,7 @@ public class Game implements Runnable {
             getKeyManager().releaseKey(KeyEvent.VK_P);
             isPaused = !isPaused;
         }
-        if (getKeyManager().save){
+        if (getKeyManager().save) {
             getKeyManager().releaseKey(KeyEvent.VK_G);
             Save("Progress.txt");
         }

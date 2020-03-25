@@ -1,7 +1,7 @@
 /*
- * Mariana Martínez Celis
- * A01194953
- * Parcial 1
+ * Mariana Martínez Celis A01194953
+ * Diego Gomez Cota A00824758
+ * Tarea Animaciones
  */
 package videogame;
 
@@ -20,7 +20,7 @@ public class Assets {
     public static SoundClip help;         // to store the buenos sound
     public static SoundClip hit;          // to store the malos sound
     public static BufferedImage end;        // to store the end (gameOver) image
-    
+
     public static BufferedImage spritesPlayer; // to store the players sprites
     public static BufferedImage spritesChars;  // to store the characters sprites
     public static BufferedImage playerUp[];    // for player to go up
@@ -41,11 +41,11 @@ public class Assets {
         help = new SoundClip("/sounds/help.wav");
         hit = new SoundClip("/sounds/hit.wav");
         end = ImageLoader.loadImage("/images/gameOver.jpg");
-        
+
         // Getting the sprites from the picture
         spritesPlayer = ImageLoader.loadImage("/images/dog.png");
         spritesChars = ImageLoader.loadImage("/images/characters.png");
-        
+
         // Create the arrays of Images
         SpriteSheet spriteSheetPlayer = new SpriteSheet(spritesPlayer);
         SpriteSheet spriteSheetChars = new SpriteSheet(spritesChars);
@@ -55,22 +55,21 @@ public class Assets {
         playerRight = new BufferedImage[3];
         buenosRight = new BufferedImage[2];
         malosLeft = new BufferedImage[2];
-        
+
         // Croping the pictures from the sheet to the array
-        for (int i=0; i<3; i++) {
-            playerUp[i] = spriteSheetPlayer.crop(i*45+145,345,45,38);
-            playerDown[i] = spriteSheetPlayer.crop(i*45+145,205,45,38);
-            playerLeft[i] = spriteSheetPlayer.crop(i*49+140,260,49,28);
-            playerRight[i] = spriteSheetPlayer.crop(i*49+142,310,49,28);
+        for (int i = 0; i < 3; i++) {
+            playerUp[i] = spriteSheetPlayer.crop(i * 45 + 145, 345, 45, 38);
+            playerDown[i] = spriteSheetPlayer.crop(i * 45 + 145, 205, 45, 38);
+            playerLeft[i] = spriteSheetPlayer.crop(i * 49 + 140, 260, 49, 28);
+            playerRight[i] = spriteSheetPlayer.crop(i * 49 + 142, 310, 49, 28);
         }
-        for (int i=0; i<2; i++) {
-            buenosRight[i] = spriteSheetChars.crop(i*27+54,180,27,24);
+        for (int i = 0; i < 2; i++) {
+            buenosRight[i] = spriteSheetChars.crop(i * 27 + 54, 180, 27, 24);
         }
-        for (int i=0; i<2; i++) {
-            malosLeft[i] = spriteSheetChars.crop(i*36, 210, 36, 36);
+        for (int i = 0; i < 2; i++) {
+            malosLeft[i] = spriteSheetChars.crop(i * 36, 210, 36, 36);
         }
-        
-        
+
     }
 
 }

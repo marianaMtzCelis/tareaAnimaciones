@@ -1,7 +1,7 @@
 /*
- * Mariana Martínez Celis
- * A01194953
- * Parcial 1
+ * Mariana Martínez Celis A01194953
+ * Diego Gomez Cota A00824758
+ * Tarea Animaciones
  */
 package videogame;
 
@@ -16,9 +16,10 @@ import javax.imageio.ImageIO;
  * @author antoniomejorado
  */
 public class ImageLoader {
-    
+
     /**
      * to get an image from the file path
+     *
      * @param path it is the path of the file
      * @return the <bold>BufferedImage</bold> object
      */

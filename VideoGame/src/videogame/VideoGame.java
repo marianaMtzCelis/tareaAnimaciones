@@ -1,7 +1,7 @@
 /*
- * Mariana Martínez Celis
- * A01194953
- * Parcial 1
+ * Mariana Martínez Celis A01194953
+ * Diego Gomez Cota A00824758
+ * Tarea Animaciones
  */
 package videogame;
 
@@ -19,5 +19,5 @@ public class VideoGame {
         Game g = new Game("Juego", 800, 500);
         g.start();
     }
-    
+
 }
