@@ -269,16 +269,22 @@ public class Game implements Runnable {
             getKeyManager().releaseKey(KeyEvent.VK_P);
             isPaused = !isPaused;
         }
-        if (getKeyManager().save) {
-            getKeyManager().releaseKey(KeyEvent.VK_G);
-            Save("Progress.txt");
-        }
-        if (getKeyManager().load) {
-            isPaused = true;
-            getKeyManager().releaseKey(KeyEvent.VK_C);
-            Load("Progress.txt");
-        }
+
         if (!isPaused) {
+            
+            // Checks if the user pressed the save option
+            if (getKeyManager().save) {
+                getKeyManager().releaseKey(KeyEvent.VK_G);
+                Save("Progress.txt");
+            }
+            
+            // Checks if the user pressed the load option
+            if (getKeyManager().load) {
+                isPaused = true;
+                getKeyManager().releaseKey(KeyEvent.VK_C);
+                Load("Progress.txt");
+            }
+
             // avancing player with colision
             player.tick();
             for (Enemy enemy : lista) {
