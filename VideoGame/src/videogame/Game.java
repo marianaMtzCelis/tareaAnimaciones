@@ -270,7 +270,7 @@ public class Game implements Runnable {
             isPaused = !isPaused;
         }
 
-        if (!isPaused) {
+        if (!isPaused && vidas>0) {
             
             // Checks if the user pressed the save option
             if (getKeyManager().save) {
